@@ -1,26 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Layout} from './components/Layout/Layout';
+import {Header} from './components/Header/Header';
+import {Footer} from './components/Footer/Footer';
+import {Swiper} from './components/Swiper/Swiper';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+export const App: React.FC = () : React.ReactElement | null => {
+    return (
+        <Layout
+            header={<Header/>}
+            footer={<Footer/>}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+            <Swiper/>
+        </Layout>
+    );
+};

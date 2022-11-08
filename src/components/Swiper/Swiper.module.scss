@@ -1,0 +1,13 @@
+@use '../../styles/mixins';
+
+.swiper{
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.card{
+  margin-right: 30px;
+}

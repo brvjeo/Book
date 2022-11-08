@@ -1,0 +1,11 @@
+@use '../../styles/mixins';
+
+.articleCard{
+  border: 1px solid black;
+  min-width: 200px;
+  height: 150px;
+}
+
+.header{
+  @include mixins.flexible(space-between);
+}

@@ -1,0 +1,7 @@
+@use '../../styles/mixins';
+
+.header{
+  @include mixins.flexible(space-between);
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+}
