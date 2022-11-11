@@ -1,27 +1,24 @@
 import React from 'react';
-import {Layout} from './components/Layout/Layout';
-import {Header} from './components/Header/Header';
-import {Footer} from './components/Footer/Footer';
-import {Swiper} from './components/Swiper/Swiper';
-import {Workspace} from './components/Workspace/Workspace';
-import {Articles} from './components/Articles/Articles';
-import {data} from './mock/mock';
-import {ArticleStripe} from './components/ArticleStripe/ArticleStripe';
+import {LoginPage} from './pages/LoginPage/LoginPage';
+import {Provider} from './StoreManager/components/Provider';
+import {deployFirebase} from './firebase/firebase';
+import {LoginFormValues} from './types';
+import {UserCredential} from 'firebase/auth'
 
-export const App: React.FC = () : React.ReactElement | null => {
+type FirebaseContextType = {
+    signin: (values: LoginFormValues) => Promise<UserCredential>
+}
+
+const app = deployFirebase();
+const initialValue: FirebaseContextType = {signin: app.signin.bind(app)};
+export const FirebaseContext = React.createContext<FirebaseContextType>(initialValue);
+
+export const App: React.FC = (): React.ReactElement | null => {
     return (
-        <Layout
-            header={<Header/>}
-            footer={<Footer/>}
-        >
-            <Swiper/>
-            <Workspace>
-                <Articles>
-                    {
-                        data.map(article => <ArticleStripe key={article.user.id} article={article}/>)
-                    }
-                </Articles>
-            </Workspace>
-        </Layout>
+        <FirebaseContext.Provider value={initialValue}>
+            <Provider>
+                <LoginPage/>
+            </Provider>
+        </FirebaseContext.Provider>
     );
 };

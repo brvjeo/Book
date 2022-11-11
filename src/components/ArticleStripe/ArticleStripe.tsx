@@ -1,9 +1,9 @@
 import styles from './ArticleStripe.module.scss';
 import React from 'react';
-import {IArticle} from '../../types';
+import {IArticleInfo} from '../../types';
 
 type Props = {
-    article: IArticle
+    article: IArticleInfo
 };
 
 export const ArticleStripe: React.FC<Props> = ({article}) : React.ReactElement | null => {

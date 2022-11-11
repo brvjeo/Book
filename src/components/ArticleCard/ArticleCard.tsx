@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './ArticleCard.module.scss';
-import {IArticle} from '../../types';
+import {IArticleInfo} from '../../types';
 import classNames from 'classnames';
 
 type Props = {
-    article: IArticle,
+    article: IArticleInfo,
     className: string
 }
 

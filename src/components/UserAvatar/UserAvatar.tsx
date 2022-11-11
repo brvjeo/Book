@@ -1,9 +1,9 @@
 import React from 'react';
-import {UserAvatarSize} from '../../enums';
+import {USER_AVATAR_SIZE} from '../../enums';
 
 type Props = {
     src: string,
-    size: UserAvatarSize
+    size: USER_AVATAR_SIZE
 };
 
 export const UserAvatar: React.FC<Props> = ({src, size}): React.ReactElement | null => {

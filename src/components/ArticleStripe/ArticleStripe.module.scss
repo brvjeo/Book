@@ -1,7 +1,7 @@
 @use '../../styles/mixins';
 
 .stripe{
-  @include mixins.flexible(space-between  );
+  @include mixins.flexible(space-between);
   border: 1px solid black;
   padding: 10px 20px;
   margin-bottom: 25px;

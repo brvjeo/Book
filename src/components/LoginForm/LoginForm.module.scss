@@ -1,0 +1,22 @@
+form input {
+  width: 100%;
+  padding: 10px;
+}
+
+.container {
+  padding: 20px;
+}
+
+.input {
+  display: block;
+  width: 400px;
+}
+
+.signin, .input:last-of-type {
+  margin-bottom: 10px;
+}
+
+.errorMsg{
+  color: red;
+  padding: 5px 0;
+}
