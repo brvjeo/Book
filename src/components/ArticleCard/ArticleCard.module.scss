@@ -1,11 +1,33 @@
 @use '../../styles/mixins';
 
-.articleCard{
-  border: 1px solid black;
-  min-width: 200px;
-  height: 150px;
+.card{
+  width: 350px;
+  height: 164px;
+
+  background: white;
+  border: 1px solid var(--black_a20);
+  border-radius: 30px;
+
+  @include mixins.flexible(center, stretch, column);
 }
 
 .header{
   @include mixins.flexible(space-between);
+  padding: 10px 30px;
+  border-bottom: 1px solid var(--black_a20);
+}
+
+.content{
+  flex-grow: 1;
+  padding: 15px 30px;
+  @include mixins.flexible();
+}
+
+.title{
+  text-align: center;
+}
+
+.buttonGroup{
+  padding: 0 30px 15px 30px;
+  @include mixins.flexible(flex-end);
 }

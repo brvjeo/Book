@@ -1,21 +1,40 @@
-.button{
-  cursor: pointer;
-  padding: 10px;
+@use "../../styles/variables";
+
+$--width-size-sm: auto;
+$--width-size-l: 100%;
+
+$--padding-horizontal-size-s: 0.6em;
+$--padding-horizontal-size-m: 2.5em;
+
+$--border-radius-size-s: 18px;
+$--border-radius-size-ml: variables.$global-border-radius;
+
+.button {
+  display: block;
+  font-size: variables.$global-font-size;
   border: none;
+  background: black;
+  padding-top: variables.$global-padding-component-vertical;
+  padding-bottom: variables.$global-padding-component-vertical;
+  color: white;
 
-  &-size_S{
-    padding: 5px 15px;
-    border-radius: 20px;
+  &-size_S {
+    width: $--width-size-sm;
+    padding-right: $--padding-horizontal-size-s;
+    padding-left: $--padding-horizontal-size-s;
+    border-radius: $--border-radius-size-s;
   }
 
-  &-size_M{
-    border-radius: 5px;
-    padding: 5px 30px;
+  &-size_M {
+    width: $--width-size-sm;
+    padding-right: $--padding-horizontal-size-m;
+    padding-left: $--padding-horizontal-size-m;
+    border-radius: $--border-radius-size-ml;
   }
 
-  &-size_L{
-    padding: 10px 0;
-    width: 100%;
-    border-radius: 5px;
+  &-size_L {
+    width: $--width-size-l;
+    border-radius: $--border-radius-size-ml;
   }
+
 }

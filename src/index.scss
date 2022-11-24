@@ -1,1 +1,29 @@
+@use 'styles/variables';
 @import "styles/normalize";
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Alata;
+}
+
+:root {
+  --black_a05: rgba(0, 0, 0, 0.05);
+  --black_a20: rgba(0, 0, 0, 0.20);
+  --black_a50: rgba(0, 0, 0, 0.50);
+  --black_a100: rgba(0, 0, 0, 1);
+
+  --border-width: 1px;
+}
+
+body {
+  background: var(--black_a05);
+}
+
+.container{
+  padding: 0 20px;
+  max-width: 1440px;
+  margin: auto;
+}

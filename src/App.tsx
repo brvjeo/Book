@@ -1,24 +1,31 @@
 import React from 'react';
-import {LoginPage} from './pages/LoginPage/LoginPage';
-import {Provider} from './StoreManager/components/Provider';
-import {deployFirebase} from './firebase/firebase';
-import {LoginFormValues} from './types';
-import {UserCredential} from 'firebase/auth'
+import {NotFoundPage} from './pages/Not found/NotFoundPage';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {LoginPage} from './pages/Login/LoginPage';
+import {initializeFirebaseApp} from './firebase/firebase';
+import {Provider} from './StateManager/components/Provider/Provider';
+import {store} from './store/store';
+import {initializeApp} from './core/application';
+import {ArticlesPage} from './pages/Articles/ArticlesPage';
 
-type FirebaseContextType = {
-    signin: (values: LoginFormValues) => Promise<UserCredential>
-}
+const firebaseApp = initializeFirebaseApp();
+const application = initializeApp();
+const defaultContext = {firebaseApp, application};
 
-const app = deployFirebase();
-const initialValue: FirebaseContextType = {signin: app.signin.bind(app)};
-export const FirebaseContext = React.createContext<FirebaseContextType>(initialValue);
+export const AppContext = React.createContext(defaultContext);
 
-export const App: React.FC = (): React.ReactElement | null => {
+export const App = () => {
     return (
-        <FirebaseContext.Provider value={initialValue}>
-            <Provider>
-                <LoginPage/>
+        <AppContext.Provider value={defaultContext}>
+            <Provider value={store}>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path={'/'} element={<LoginPage/>}/>
+                        <Route path={'*'} element={<NotFoundPage/>}/>
+                        <Route path={'/:userID/articles'} element={<ArticlesPage/>}/>
+                    </Routes>
+                </BrowserRouter>
             </Provider>
-        </FirebaseContext.Provider>
+        </AppContext.Provider>
     );
-};
+}

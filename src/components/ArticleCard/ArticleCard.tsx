@@ -1,26 +1,25 @@
 import React from 'react';
 import styles from './ArticleCard.module.scss';
-import {IArticleInfo} from '../../types';
-import classNames from 'classnames';
+import {Button} from '../Button/Button';
+import {BUTTON_SIZE} from '../../enums';
 
-type Props = {
-    article: IArticleInfo,
-    className: string
+type TProps = {
+    article: any
 }
 
-export const ArticleCard: React.FC<Props> = ({article, className}): React.ReactElement | null => {
+export const ArticleCard: React.FC<TProps> = ({article}): React.ReactElement | null => {
     return (
-        <div className={classNames(styles.articleCard, className)}>
-            <header className={styles.header}>
-                <span>{article.date}</span>
-                <span>{article.user.name + ' ' + article.user.surname}</span>
-            </header>
-            <main className={styles.content}>
-                <h4>{article.title}</h4>
-                <div>
-                    <button>More</button>
-                </div>
-            </main>
+        <div className={styles.card}>
+            <div className={styles.header}>
+                <span className={styles.date}>20-20-20</span>
+                <span className={styles.user}>Jonh J.</span>
+            </div>
+            <div className={styles.content}>
+                <h2 className={styles.title}>React vs Angular - Pros and Cons</h2>
+            </div>
+            <div className={styles.buttonGroup}>
+                <Button type={'button'}>More</Button>
+            </div>
         </div>
     );
-};
+}

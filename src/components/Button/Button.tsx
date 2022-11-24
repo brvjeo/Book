@@ -1,33 +1,29 @@
-import React, {BaseSyntheticEvent} from 'react';
-import {BUTTON_SIZE} from '../../enums';
-import styles from './Button.module.scss';
 import classNames from 'classnames';
+import React, {BaseSyntheticEvent} from 'react';
+import styles from './Button.module.scss';
+import {BUTTON_SIZE} from '../../enums';
 
-type Props = {
+type TProps = {
+    type: 'submit' | 'button',
     children: React.ReactNode,
-    onClick?: (e: BaseSyntheticEvent) => void,
-    size: BUTTON_SIZE,
     className?: string,
-    submit?: boolean,
-    form?: string
+    id?: string,
+    size?: BUTTON_SIZE,
+    disabled?: boolean,
+    onClick?: (e: BaseSyntheticEvent) => void
 }
 
-export const Button: React.FC<Props> =
-    ({
-         form,
-         submit,
-         children,
-         onClick,
-         size,
-         className
-     }): React.ReactElement | null => {
-        return (
-            <button
-                type={submit ? 'submit' : 'button'}
-                form={form}
-                className={classNames(styles.button, styles[size], className)}
-            >
-                {children}
-            </button>
-        );
-    }
+export const Button: React.FC<TProps> = (
+    {
+        type,
+        children,
+        className,
+        id,
+        size = BUTTON_SIZE.S,
+        disabled,
+        onClick
+    }): React.ReactElement | null => {
+    return (
+        <button onClick={onClick} type={type} id={id} className={classNames(styles.button,styles[size],className)} disabled={disabled}>{children}</button>
+    );
+}

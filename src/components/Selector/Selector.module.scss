@@ -1,0 +1,51 @@
+@use '../../styles/variables';
+@use '../../styles/mixins';
+
+$--padding-horizontal: variables.$global-padding-component-horizontal;
+$--padding-vertical: variables.$global-padding-component-vertical;
+$--background: #FFFFFF;
+
+
+.selector{
+  font-size: variables.$global-font-size;
+  position: relative;
+  width: variables.$global-width-component-size-m;
+  background: $--background;
+  border-radius: variables.$global-border-radius;
+  border: variables.$global-border-black20;
+}
+
+.list{
+  border: variables.$global-border-black20;
+  border-radius: variables.$global-border-radius;
+  position: absolute;
+  width: calc(100% + (var(--border-width) * 2));
+  top: 100%;
+  left: calc(var(--border-width) * (-1));
+  background: inherit;
+}
+
+.option{
+  padding: variables.$global-padding-component-vertical variables.$global-padding-component-horizontal;
+}
+
+.option:hover{
+  background: var(--black_a100);
+  color: #FFFFFF;
+}
+
+.button{
+  @include mixins.flexible(space-between);
+  padding: $--padding-vertical $--padding-horizontal;
+}
+
+.svg_rotated{
+  transform: rotate(180deg);
+}
+
+.list_opened{
+  border-radius: 0 0 variables.$global-border-radius variables.$global-border-radius;
+}
+.button_opened{
+  border-radius: variables.$global-border-radius variables.$global-border-radius 0 0;
+}

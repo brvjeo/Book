@@ -1,0 +1,9 @@
+@use '../../styles/variables';
+
+$--border-radius: 15px;
+
+.panel{
+  border: variables.$global-border-black20;
+  padding: variables.$global-padding-component-vertical variables.$global-padding-component-horizontal;
+  border-radius: $--border-radius;
+}

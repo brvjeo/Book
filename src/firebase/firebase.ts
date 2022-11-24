@@ -1,33 +1,44 @@
-import {FirebaseApp, initializeApp} from 'firebase/app';
-import {getAuth, signInWithEmailAndPassword, UserCredential, Auth} from 'firebase/auth';
+import {initializeApp, FirebaseApp} from "firebase/app";
+import {getFirestore, Firestore} from "firebase/firestore";
+import {UserCredential, getAuth, Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
 import {firebaseConfig} from './config';
-import {LoginFormValues} from '../types';
 
-class Firebase {
+export enum DB_ROUTES{
+    userIDS = 'userIDS'
+}
+
+export class Firebase {
     app: FirebaseApp;
+    db: Firestore;
     auth: Auth;
 
     constructor() {
         this.app = initializeApp(firebaseConfig);
         this.auth = getAuth(this.app);
+        this.db = getFirestore(this.app);
     }
 
-    signin({email, password}: LoginFormValues): Promise<UserCredential> {
+    signInWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
         return signInWithEmailAndPassword(this.auth, email, password);
     }
 
-    signup() {
+    createUserWithEmailAndPassword(email: string, password: string): Promise<UserCredential>{
+        return createUserWithEmailAndPassword(this.auth, email, password);
+    }
+
+    writeDB(route: DB_ROUTES, data: any){
+        return addDoc(collection(this.db, route), data);
     }
 }
 
-export const deployFirebase = (() => {
-    let firebase: Firebase;
-
+export const initializeFirebaseApp = (() => {
     return () => {
-        if (!firebase) {
+        let firebase: Firebase | undefined;
+
+        if(!firebase){
             firebase = new Firebase();
         }
-
         return firebase;
     }
 })();

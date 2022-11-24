@@ -1,12 +1,19 @@
-import {createStore} from '../StoreManager/store';
-import {IAction, IState, RootReducer} from '../StoreManager/types';
-import {userReducer} from './user/reducer';
+import {createStore} from '../StateManager/store';
+import {ACTIONS} from '../enums';
 
+export interface IAction {
+    type: ACTIONS,
+    payload: any
+}
 
-const rootReducer: RootReducer = (state: IState = {} as IState, action: IAction = {} as IAction): IState => {
-    return {
-        user: userReducer(state.user, action)
-    };
+export interface IState {}
+
+export interface IRootReducer {
+    (state?: IState, action?: IAction): IState
+}
+
+export const rootReducer: IRootReducer = (state = {} as IState, action = {} as IAction): IState => {
+    return {};
 }
 
 export const store = createStore(rootReducer);

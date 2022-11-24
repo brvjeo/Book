@@ -1,0 +1,8 @@
+.swiper{
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 45px;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 25px 0;
+}

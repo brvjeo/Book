@@ -1,7 +1,7 @@
-export enum USER_AVATAR_SIZE {
+export enum AVATAR_SIZE {
     S = 36,
-    M = 50,
-    L = 72
+    M = 45,
+    L = 60
 }
 
 export enum BUTTON_SIZE {
@@ -10,8 +10,17 @@ export enum BUTTON_SIZE {
     L = 'button-size_L'
 }
 
-export enum ARTICLE_NODE_TYPE {
-    heading = 'heading',
-    paragraph = 'paragraph',
-    image = 'image'
+export enum INPUT_SIZE {
+    S = 'input-size_S',
+    L = 'input-size_L'
+}
+
+export enum AUTH_ERRORS {
+    wrongPassword = 'WRONG_PASSWORD',
+    noSuchUser = 'USER_DOES_NOT_EXIST',
+    userExists = 'USER_EXISTS'
+}
+
+export enum ACTIONS {
+
 }

@@ -1,7 +1,10 @@
-@use '../../styles/mixins';
+@use "../../styles/mixins";
 
-.header{
-  @include mixins.flexible(space-between);
-  border-bottom: 1px solid black;
-  margin-bottom: 20px;
+.wrapper{
+  @include mixins.flexible(center);
+  padding: 10px 0;
+}
+
+.logoWrapper{
+  @include mixins.flexible()
 }

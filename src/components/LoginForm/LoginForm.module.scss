@@ -1,22 +1,32 @@
-form input {
-  width: 100%;
-  padding: 10px;
+@use '../../styles/mixins';
+@use '../../styles/variables';
+
+$--margin-bottom: 1em;
+
+.form {
+  width: 300px;
+  font-size: variables.$global-font-size;
+
+  label {
+    display: block;
+  }
+
+  input:last-of-type {
+    margin-bottom: $--margin-bottom;
+  }
+
+  button:not(:last-of-type) {
+    margin-bottom: 0.5em;
+  }
 }
 
-.container {
-  padding: 20px;
+.logo {
+  @include mixins.flexible();
+  margin-bottom: 30px;
 }
 
-.input {
-  display: block;
-  width: 400px;
+.error{
+  color: #FF0000;
+  margin-bottom: $--margin-bottom;
 }
 
-.signin, .input:last-of-type {
-  margin-bottom: 10px;
-}
-
-.errorMsg{
-  color: red;
-  padding: 5px 0;
-}
