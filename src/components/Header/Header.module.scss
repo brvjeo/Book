@@ -1,10 +1,20 @@
 @use "../../styles/mixins";
 
 .wrapper{
-  @include mixins.flexible(center);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   padding: 10px 0;
 }
 
 .logoWrapper{
+  justify-self: center;
   @include mixins.flexible()
+}
+
+.buttonCreate{
+  justify-self: left;
+}
+
+.avatar{
+  justify-self: right;
 }

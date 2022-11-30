@@ -1,8 +1,21 @@
 .swiper{
   display: grid;
   grid-auto-flow: column;
+  grid-template-columns: min-content;
+  align-content: center;
+  align-items: center;
   grid-column-gap: 45px;
   overflow-y: hidden;
   overflow-x: scroll;
   padding: 25px 0;
+  min-height: 275px;
+  position: relative;
+}
+
+.title{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
 }

@@ -3,23 +3,29 @@
 $--width-size-sm: auto;
 $--width-size-l: 100%;
 
-$--padding-horizontal-size-s: 0.6em;
+$--padding-horizontal-size-s: 1em;
 $--padding-horizontal-size-m: 2.5em;
 
 $--border-radius-size-s: 18px;
 $--border-radius-size-ml: variables.$global-border-radius;
 
+$--padding-vertical: variables.$global-padding-component-vertical;
+
 .button {
   display: block;
-  font-size: variables.$global-font-size;
-  border: none;
-  background: black;
-  padding-top: variables.$global-padding-component-vertical;
-  padding-bottom: variables.$global-padding-component-vertical;
+  font-size: var(--font-size);
+  padding: variables.$global-padding-component-vertical 0;
   color: white;
+  background: black;
+
+  &_isLoading{
+    height: calc($--padding-vertical * 2 + 1em);
+    width: 3.7em !important;
+  }
 
   &-size_S {
     width: $--width-size-sm;
+    font-size: calc(var(--font-size) * 0.85);
     padding-right: $--padding-horizontal-size-s;
     padding-left: $--padding-horizontal-size-s;
     border-radius: $--border-radius-size-s;

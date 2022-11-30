@@ -13,7 +13,7 @@ export const Layout: React.FC<TProps> = ({children, header}): React.ReactElement
             <header className={classNames('container', styles.header)}>
                 {header}
             </header>
-            <main className={classNames('container', styles.footer)}>
+            <main className={classNames('container', styles.main)}>
                 {children}
             </main>
         </>

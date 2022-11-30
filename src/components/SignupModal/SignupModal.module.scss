@@ -12,23 +12,12 @@
 
 .panel{
   background: #FFFFFF;
-  padding-left: 25px;
-  padding-right: 25px;
-  position: relative;
 }
 
-.buttonClose{
+.button{
   display: flex;
-  padding: 5px;
-  position: absolute;
-  top: 0;
-  left: 100%;
-  transform: translate(-150%, 50%);
   background: none;
-  border:none;
-
-  svg{
-    width: 15px;
-    height: 15px;
-  }
+  border: none;
+  margin-left: auto;
 }
+

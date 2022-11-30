@@ -1,10 +1,14 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import {Link} from 'react-router-dom';
+import {Button} from '../Button/Button';
+import {Avatar} from '../Avatar/Avatar';
+import {BUTTON_SIZE} from '../../enums';
 
 export const Header: React.FC = (): React.ReactElement | null => {
     return (
         <div className={styles.wrapper}>
+            <Button className={styles.buttonCreate} type={'button'} size={BUTTON_SIZE.M}>Create</Button>
             <div className={styles.logoWrapper}>
                 <Link to={'/'}>
                     <svg width="91" height="22" viewBox="0 0 91 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,6 +16,7 @@ export const Header: React.FC = (): React.ReactElement | null => {
                     </svg>
                 </Link>
             </div>
+            <Avatar className={styles.avatar}/>
         </div>
     );
 }

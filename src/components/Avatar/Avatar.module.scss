@@ -1,0 +1,23 @@
+$--width-size-s: 36px;
+$--width-size-m: 50px;
+$--width-size-l: 75px;
+
+.avatar{
+  border-radius: 50%;
+  background-color: #000000;
+
+  &-size_S{
+    width: $--width-size-s;
+    height: $--width-size-s;
+  }
+
+  &-size_M{
+    width: $--width-size-m;
+    height: $--width-size-m;
+  }
+
+  &-size_L{
+    width: $--width-size-l;
+    height: $--width-size-l;
+  }
+}

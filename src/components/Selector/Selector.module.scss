@@ -7,7 +7,7 @@ $--background: #FFFFFF;
 
 
 .selector{
-  font-size: variables.$global-font-size;
+  font-size: var(--font-size);
   position: relative;
   width: variables.$global-width-component-size-m;
   background: $--background;

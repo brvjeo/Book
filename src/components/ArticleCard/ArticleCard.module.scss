@@ -1,12 +1,15 @@
+@use '../../styles/variables';
 @use '../../styles/mixins';
 
 .card{
   width: 350px;
-  height: 164px;
+  height: 180px;
 
   background: white;
-  border: 1px solid var(--black_a20);
   border-radius: 30px;
+  box-shadow: 0 0px 20px 1px var(--black_a10);
+  font-size: var(--font-size);
+  margin: 15px;
 
   @include mixins.flexible(center, stretch, column);
 }
@@ -14,20 +17,39 @@
 .header{
   @include mixins.flexible(space-between);
   padding: 10px 30px;
-  border-bottom: 1px solid var(--black_a20);
+  border-bottom: 1px solid var(--black_a05);
 }
 
 .content{
   flex-grow: 1;
   padding: 15px 30px;
+  font-size: var(--font-size);
   @include mixins.flexible();
-}
-
-.title{
-  text-align: center;
 }
 
 .buttonGroup{
   padding: 0 30px 15px 30px;
   @include mixins.flexible(flex-end);
+}
+
+.title{
+  display: -webkit-box;
+  text-align: center;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  &_isLoading{
+    background: var(--black_a10);
+    width: 100%;
+    height: 1em;
+    border-radius: 15px;
+  }
+}
+
+.date_isLoading, .user_isLoading{
+  background: var(--black_a10);
+  height: 1em;
+  width: 2em;
+  border-radius: 15px;
 }

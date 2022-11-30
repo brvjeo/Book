@@ -1,19 +1,13 @@
-import {createStore} from '../StateManager/store';
-import {ACTIONS} from '../enums';
+import {configureStore} from '@reduxjs/toolkit';
+import userReducer from './user/userSlicer';
 
-export interface IAction {
-    type: ACTIONS,
-    payload: any
-}
+export const store = configureStore({
+    reducer: {
+        user: userReducer
+    }
+})
 
-export interface IState {}
+export default store;
 
-export interface IRootReducer {
-    (state?: IState, action?: IAction): IState
-}
-
-export const rootReducer: IRootReducer = (state = {} as IState, action = {} as IAction): IState => {
-    return {};
-}
-
-export const store = createStore(rootReducer);
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;

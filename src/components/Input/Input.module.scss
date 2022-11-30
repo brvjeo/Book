@@ -8,7 +8,7 @@ $--width-size-l: 100%;
 
 .input{
   display: block;
-  font-size: variables.$global-font-size;
+  font-size: var(--font-size);
   outline-color: var(--black_a100);
   border: variables.$global-border-black20;
   border-radius: variables.$global-border-radius;

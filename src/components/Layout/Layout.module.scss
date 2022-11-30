@@ -1,4 +1,11 @@
 .header{
   margin-bottom: 5px;
   border-bottom: 1px solid white;
+  background: #FFFFFF;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 0px 20px 1px var(--black_a10);
+}
+
+.main{
+  padding: 0;
 }

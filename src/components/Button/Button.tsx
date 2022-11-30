@@ -10,7 +10,8 @@ type TProps = {
     id?: string,
     size?: BUTTON_SIZE,
     disabled?: boolean,
-    onClick?: (e: BaseSyntheticEvent) => void
+    onClick?: (e: BaseSyntheticEvent) => void,
+    isLoading?: boolean
 }
 
 export const Button: React.FC<TProps> = (
@@ -21,9 +22,10 @@ export const Button: React.FC<TProps> = (
         id,
         size = BUTTON_SIZE.S,
         disabled,
-        onClick
+        onClick,
+        isLoading
     }): React.ReactElement | null => {
     return (
-        <button onClick={onClick} type={type} id={id} className={classNames(styles.button,styles[size],className)} disabled={disabled}>{children}</button>
+        <button onClick={onClick} type={type} id={id} className={classNames(styles.button,styles[size],className, isLoading && styles.button_isLoading)} disabled={disabled}>{!isLoading && children}</button>
     );
 }

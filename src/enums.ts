@@ -1,7 +1,7 @@
 export enum AVATAR_SIZE {
-    S = 36,
-    M = 45,
-    L = 60
+    S = 'avatar-size_S',
+    M = 'avatar-size_M',
+    L = 'avatar-size_L'
 }
 
 export enum BUTTON_SIZE {
@@ -19,8 +19,4 @@ export enum AUTH_ERRORS {
     wrongPassword = 'WRONG_PASSWORD',
     noSuchUser = 'USER_DOES_NOT_EXIST',
     userExists = 'USER_EXISTS'
-}
-
-export enum ACTIONS {
-
 }
