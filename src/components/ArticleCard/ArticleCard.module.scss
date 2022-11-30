@@ -1,13 +1,15 @@
 @use '../../styles/variables';
 @use '../../styles/mixins';
 
+$--box-shadow: var(--box-shadow);
+
 .card{
   width: 350px;
   height: 180px;
 
   background: white;
   border-radius: 30px;
-  box-shadow: 0 0px 20px 1px var(--black_a10);
+  box-shadow: $--box-shadow;
   font-size: var(--font-size);
   margin: 15px;
 
@@ -15,7 +17,10 @@
 }
 
 .header{
-  @include mixins.flexible(space-between);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
   padding: 10px 30px;
   border-bottom: 1px solid var(--black_a05);
 }
@@ -52,4 +57,12 @@
   height: 1em;
   width: 2em;
   border-radius: 15px;
+}
+
+.date_isLoading, .date{
+  justify-self: left;
+}
+
+.user_isLoading, .user{
+  justify-self: right;
 }

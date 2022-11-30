@@ -1,9 +1,10 @@
 @use '../../styles/variables';
 
 $--border-radius: 15px;
+$--box-shadow: var(--box-shadow);
 
 .panel{
-  border: variables.$global-border-black20;
+  box-shadow: $--box-shadow;
   padding: variables.$global-padding-component-vertical variables.$global-padding-component-horizontal;
   border-radius: $--border-radius;
 }

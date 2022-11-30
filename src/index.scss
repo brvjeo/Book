@@ -16,10 +16,12 @@
   --black_a20: rgba(0, 0, 0, 0.20);
   --black_a50: rgba(0, 0, 0, 0.50);
   --black_a100: rgba(0, 0, 0, 1);
+}
 
+:root{
   --border-width: 1px;
-
   --font-size: 14px;
+  --box-shadow: 0 0px 20px 1px var(--black_a10);
 }
 
 .container{

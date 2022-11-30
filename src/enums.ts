@@ -20,3 +20,8 @@ export enum AUTH_ERRORS {
     noSuchUser = 'USER_DOES_NOT_EXIST',
     userExists = 'USER_EXISTS'
 }
+
+export enum DB_ROUTES {
+    users = 'users',
+    articles = 'articles'
+}

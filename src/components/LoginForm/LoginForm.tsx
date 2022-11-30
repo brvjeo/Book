@@ -8,11 +8,11 @@ import {useToggle} from '../../hooks/useToggle';
 import {SignupModal} from '../SignupModal/SignupModal';
 import {useDelay} from '../../hooks/useDelay';
 import {svgLogo} from '../../svgSprite';
-import {DB_ROUTES} from '../../firebase/firebase';
 import {useNavigate} from 'react-router-dom';
-import {AppContext} from '../../App';
+import {ApplicationContext} from '../../App';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
-import {authUser} from '../../store/user/userSlicer';
+import {authUser, pullViewed} from '../../store/user/userSlicer';
+import {authenticateUserThunk} from "../../store/user/thunks/authenticateUserThunk";
 
 type TFormValues = {
     email: string,
@@ -25,10 +25,9 @@ type TErrorState = {
 }
 
 export const LoginForm = () => {
+    const application = useContext(ApplicationContext);
     const navigate = useNavigate();
-    const {firebaseApp, application} = useContext(AppContext)
     const dispatch = useAppDispatch();
-
 
     const initialErrorState: TErrorState = {dispatched: false, error: null}
     const [errorState, setErrorState] = useDelay(initialErrorState, 12000);
@@ -41,20 +40,28 @@ export const LoginForm = () => {
     const emailID = React.useId();
     const passwordID = React.useId();
 
-
     const loginHandler = (values: TFormValues) => {
-        firebaseApp.signInWithEmailAndPassword(values.email, values.password)
+        application.signInWithEmailAndPassword(values.email, values.password)
             .then(
-                ({user}) => application.fetchUser(user.uid, (id) => firebaseApp.readDB(DB_ROUTES.users, id))
-            )
-            .then(userRecord => {
-                if(userRecord !== null){
-                    application.setUserToStorage(userRecord.uid);
-                    dispatch(authUser(userRecord.user));
+                async userCredential => {
+                    try{
+                        const user = await application.fetchUser(userCredential.user.uid);
+                        const viewed = await application.fetchViewed(user);
 
-                    navigate(`/${userRecord.user.id}/articles`);
+                        application.setUserToStorage(userCredential.user.uid);
+
+                        dispatch(authenticateUserThunk(user, viewed));
+
+                        navigate(`/${user.id}/articles`);
+                    }catch (e){
+                        await application.deleteUser(userCredential.user);
+                        return e;
+                    }
                 }
-            });
+            )
+            .catch(
+                e => console.log(JSON.stringify(e))
+            );
     }
 
     return (
@@ -87,7 +94,8 @@ export const LoginForm = () => {
                         errorState.dispatched && <div className={styles.error}>{errorState.error}</div>
                     }
                     <Button className={styles.button} type={'submit'} size={BUTTON_SIZE.L}>Log in</Button>
-                    <Button className={styles.button} type={'button'} size={BUTTON_SIZE.L} onClick={setModalVisible}>Sign up</Button>
+                    <Button className={styles.button} type={'button'} size={BUTTON_SIZE.L} onClick={setModalVisible}>Sign
+                        up</Button>
                     {
                         modalState && <SignupModal onClose={setModalInvisible}/>
                     }

@@ -4,13 +4,14 @@ import {Input} from '../Input/Input';
 import {Button} from '../Button/Button';
 import styles from './SignupForm.module.scss';
 import {BUTTON_SIZE, INPUT_SIZE} from '../../enums';
-import {AppContext} from '../../App';
+import {ApplicationContext} from '../../App';
 import {useNavigate} from 'react-router-dom';
-import {DB_ROUTES} from '../../firebase/firebase';
 import {useDelay} from '../../hooks/useDelay';
 import {svgLogo} from '../../svgSprite';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
-import {authUser} from '../../store/user/userSlicer';
+import {authUser, pullViewed} from '../../store/user/userSlicer';
+import {Application} from "../../core/application";
+import {authenticateUserThunk} from "../../store/user/thunks/authenticateUserThunk";
 
 type TProps = {
     onClose: () => void
@@ -29,7 +30,7 @@ type TErrorState = {
 export const SignupForm: React.FC<TProps> = ({onClose: closeModal}): React.ReactElement | null => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {firebaseApp, application} = useContext(AppContext);
+    const application = useContext(ApplicationContext);
 
     const initialErrorState: TErrorState = {dispatched: false, error: null};
     const [errorState, setErrorState] = useDelay(initialErrorState, 12000);
@@ -40,37 +41,21 @@ export const SignupForm: React.FC<TProps> = ({onClose: closeModal}): React.React
     const passwordID = useId();
 
     const signupHandler = (values: TFormValues) => {
-        firebaseApp.createUserWithEmailAndPassword(values.email, values.password)
+        application.signInWithEmailAndPassword(values.email, values.password)
             .then(
-                ({user}) => {
-                    const user_ = application.createUser(user.uid, values);
-                    const uid_ = user.uid;
-                    return firebaseApp.writeDB(DB_ROUTES.users, user.uid, user_)
-                        .then(
-                            () => {
-                                dispatch(authUser(user_));
-                                application.setUserToStorage(uid_);
-                                navigate(`/${user_.id}/articles`);
-                            }
-                        )
-                        .catch(
-                            e => firebaseApp.deleteUser(user).then(() => console.log('no access to DB'))
-                        );
+                userCredential => {
+                    const user = Application.createUser(userCredential.user.uid, values);
+
+                    dispatch(authenticateUserThunk(user, []));
+
+                    application.setUserToStorage(userCredential.user.uid);
+
+                    navigate(`/${user.id}/articles`);
                 }
             )
-            .catch(e => {
-                if (e.message) {
-                    setErrorState(
-                        {
-                            dispatched: true,
-                            error: e.message
-                        },
-                        initialErrorState
-                    )
-                } else {
-                    console.log(e);
-                }
-            });
+            .catch(
+                e => console.log(JSON.stringify(e))
+            )
     }
 
     return (
