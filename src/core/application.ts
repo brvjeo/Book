@@ -22,7 +22,6 @@ import {
 } from "firebase/auth";
 import {firebaseConfig} from '../core/config';
 import {DB_ROUTES} from "../enums";
-import {application} from "../App";
 
 export interface IUser {
     id: string,
@@ -81,11 +80,11 @@ export class Application {
         }
     }
 
-    setUserToStorage(id: string) {
+    static setUserToStorage(id: string) {
         localStorage.setItem('CURRENT_USER', id);
     }
 
-    getUserFromStorage(): string | null {
+    static getUserFromStorage(): string | null {
         return localStorage.getItem('CURRENT_USER');
     }
 
@@ -111,6 +110,10 @@ export class Application {
 
     createUserWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
         return createUserWithEmailAndPassword(this.auth, email, password);
+    }
+
+    pushUser(uid: string, user: IUser): Promise<any>{
+        return this.writeDB(DB_ROUTES.users, uid, user);
     }
 
     writeDB(route: DB_ROUTES, segment: string, data: any) {

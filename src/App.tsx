@@ -4,10 +4,8 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {LoginPage} from './pages/Login/LoginPage';
 import {ArticlesPage} from './pages/Articles/ArticlesPage';
 import {useAppDispatch} from './store/hooks/useAppDispatch';
-import {authenticateUserThunk} from "./store/user/thunks/authenticateUserThunk";
+import {authenticateUserOnReloadThunk} from "./store/user/thunks/authenticateUserOnReloadThunk";
 import {initializeApplication} from "./core/application";
-import {authUser, pullViewed} from "./store/user/userSlicer";
-
 
 export const application = initializeApplication();
 export const ApplicationContext = React.createContext(application);
@@ -16,26 +14,9 @@ export const App = () => {
     const dispatch = useAppDispatch();
 
     useEffect(
-        () => {
-            const userIdFromStorage = application.getUserFromStorage();
-
-            if (userIdFromStorage !== null) {
-                application.fetchUser(userIdFromStorage)
-                    .then(
-                        async user => {
-                            try{
-                                const viewed = await application.fetchViewed(user);
-                                dispatch(authenticateUserThunk(user, viewed));
-                            }catch (e) {
-                                return e;
-                            }
-                        }
-                    )
-                    .catch(e => console.log(JSON.stringify(e)))
-            }
-        },
+        () => dispatch(authenticateUserOnReloadThunk(application)),
         []
-    )
+    );
 
     return (
         <ApplicationContext.Provider value={application}>

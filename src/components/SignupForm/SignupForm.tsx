@@ -9,9 +9,8 @@ import {useNavigate} from 'react-router-dom';
 import {useDelay} from '../../hooks/useDelay';
 import {svgLogo} from '../../svgSprite';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
-import {authUser, pullViewed} from '../../store/user/userSlicer';
 import {Application} from "../../core/application";
-import {authenticateUserThunk} from "../../store/user/thunks/authenticateUserThunk";
+import {authUser} from "../../store/user/userSlicer";
 
 type TProps = {
     onClose: () => void
@@ -41,16 +40,20 @@ export const SignupForm: React.FC<TProps> = ({onClose: closeModal}): React.React
     const passwordID = useId();
 
     const signupHandler = (values: TFormValues) => {
-        application.signInWithEmailAndPassword(values.email, values.password)
+        application.createUserWithEmailAndPassword(values.email, values.password)
             .then(
-                userCredential => {
-                    const user = Application.createUser(userCredential.user.uid, values);
+                async userCredential => {
+                    try{
+                        const user = Application.createUser(userCredential.user.uid, values);
+                        await application.pushUser(userCredential.user.uid, user);
 
-                    dispatch(authenticateUserThunk(user, []));
-
-                    application.setUserToStorage(userCredential.user.uid);
-
-                    navigate(`/${user.id}/articles`);
+                        dispatch(authUser(user, []));
+                        Application.setUserToStorage(userCredential.user.uid);
+                        navigate(`/${userCredential.user.uid}/articles`);
+                    }catch (e) {
+                        await application.deleteUser(userCredential.user);
+                        return Promise.reject(e);
+                    }
                 }
             )
             .catch(

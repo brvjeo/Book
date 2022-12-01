@@ -11,8 +11,8 @@ import {svgLogo} from '../../svgSprite';
 import {useNavigate} from 'react-router-dom';
 import {ApplicationContext} from '../../App';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
-import {authUser, pullViewed} from '../../store/user/userSlicer';
-import {authenticateUserThunk} from "../../store/user/thunks/authenticateUserThunk";
+import {authUser} from '../../store/user/userSlicer';
+import {Application} from "../../core/application";
 
 type TFormValues = {
     email: string,
@@ -48,11 +48,10 @@ export const LoginForm = () => {
                         const user = await application.fetchUser(userCredential.user.uid);
                         const viewed = await application.fetchViewed(user);
 
-                        application.setUserToStorage(userCredential.user.uid);
+                        Application.setUserToStorage(userCredential.user.uid);
 
-                        dispatch(authenticateUserThunk(user, viewed));
-
-                        navigate(`/${user.id}/articles`);
+                        dispatch(authUser(user, viewed));
+                        navigate(`/${userCredential.user.uid}/articles`);
                     }catch (e){
                         await application.deleteUser(userCredential.user);
                         return e;
