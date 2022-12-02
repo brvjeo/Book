@@ -1,68 +1,77 @@
 @use '../../styles/variables';
 @use '../../styles/mixins';
 
-$--box-shadow: var(--box-shadow);
+/*
+INNER STYLES
+ */
 
-.card{
-  width: 350px;
-  height: 180px;
+$--card-width: 350px;
+$--card-height: variables.$global-card-height;
+$--card-margin: variables.$global-card-margin;
+$--card-border-radius: 30px;
 
-  background: white;
-  border-radius: 30px;
-  box-shadow: $--box-shadow;
-  font-size: var(--font-size);
-  margin: 15px;
+$--card-background: #FFFFFF;
+$--card-box-shadow: var(--box-shadow);
+$--card-font-size: var(--font-size);
 
+$--card-inner-padding-horizontal: 30px;
+$--card-inner-padding-vertical: calc($--card-inner-padding-horizontal * 0.33);
+
+
+.card {
   @include mixins.flexible(center, stretch, column);
+
+  width: $--card-width;
+  height: $--card-height;
+
+  background: $--card-background;
+  border-radius: $--card-border-radius;
+  box-shadow: $--card-box-shadow;
+  font-size: $--card-font-size;
+  margin: $--card-margin;
 }
 
-.header{
+.header {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   align-items: center;
-  padding: 10px 30px;
-  border-bottom: 1px solid var(--black_a05);
+  padding: $--card-inner-padding-vertical $--card-inner-padding-horizontal;
+  border-bottom: var(--border-solid);
 }
 
-.content{
-  flex-grow: 1;
-  padding: 15px 30px;
-  font-size: var(--font-size);
+.content {
   @include mixins.flexible();
+  flex-grow: 1;
+  padding: $--card-inner-padding-vertical $--card-inner-padding-horizontal;
+  font-size: var(--font-size);
 }
 
-.buttonGroup{
-  padding: 0 30px 15px 30px;
+.buttonGroup {
   @include mixins.flexible(flex-end);
+  padding: 0 $--card-inner-padding-horizontal $--card-inner-padding-vertical $--card-inner-padding-horizontal;
 }
 
-.title{
+.title {
   display: -webkit-box;
   text-align: center;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 
-  &_isLoading{
-    background: var(--black_a10);
-    width: 100%;
-    height: 1em;
-    border-radius: 15px;
+  &_isLoading {
+    @include mixins.is-loading(100%);
   }
 }
 
-.date_isLoading, .user_isLoading{
-  background: var(--black_a10);
-  height: 1em;
-  width: 2em;
-  border-radius: 15px;
+.date_isLoading, .user_isLoading {
+  @include mixins.is-loading(4em);
 }
 
-.date_isLoading, .date{
+.date_isLoading, .date {
   justify-self: left;
 }
 
-.user_isLoading, .user{
+.user_isLoading, .user {
   justify-self: right;
 }

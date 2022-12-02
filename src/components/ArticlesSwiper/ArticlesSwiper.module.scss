@@ -1,18 +1,24 @@
-.swiper{
+@use '../../styles/variables';
+
+$--swiper-column-gap: 45px;
+$--swiper-padding: 25px;
+$--min-height: variables.$global-card-summary-height;
+
+.swiper {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: min-content;
   align-content: center;
   align-items: center;
-  grid-column-gap: 45px;
+  grid-column-gap: $--swiper-column-gap;
   overflow-y: hidden;
   overflow-x: scroll;
-  padding: 25px 0;
-  min-height: 275px;
+  padding: $--swiper-padding 0;
+  min-height: $--min-height;
   position: relative;
 }
 
-.title{
+.title {
   position: absolute;
   top: 50%;
   left: 50%;

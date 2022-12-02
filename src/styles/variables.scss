@@ -9,3 +9,6 @@ $global-border-radius: 5px;
 
 $global-width-component-size-m: 170px;
 
+$global-card-height: 180px;
+$global-card-margin: 15px;
+$global-card-summary-height: calc($global-card-height + $global-card-margin * 2);

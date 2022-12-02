@@ -19,6 +19,7 @@
 
 :root{
   --border-width: 1px;
+  --border-solid: var(--border-width) solid var(--black_a05);
   --font-size: 14px;
   --box-shadow: 0 0px 20px 1px var(--black_a10);
 }

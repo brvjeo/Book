@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './ArticlesSwiper.module.scss';
 import {IArticle} from "../../core/application";
 import {ArticleCard} from "../ArticleCard/ArticleCard";
+import {emptyArray} from "../../utils/utils";
 
 type TProps = {
     articles: IArticle[] | null,
@@ -9,7 +10,7 @@ type TProps = {
 }
 
 export const ArticlesSwiper: React.FC<TProps> = ({articles, isLoading}): React.ReactElement | null => {
-    const loadingArticles = [0, 1, 2, 3].map(key => <ArticleCard key={key} isLoading={true}/>)
+    const loadingArticles = emptyArray(4).map((_,i) => <ArticleCard key={i} article={null}/>);
 
     const articlesViewer = () => {
         if (articles === null) {
