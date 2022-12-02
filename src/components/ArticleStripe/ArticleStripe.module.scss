@@ -1,0 +1,59 @@
+@use '../../styles/variables';
+@use '../../styles/mixins';
+
+.stripe {
+  background: #FFFFFF;
+  padding: variables.$global-padding-component-vertical variables.$global-padding-component-horizontal;
+  justify-content: space-between;
+  box-shadow: var(--box-shadow);
+  border-radius: variables.$global-border-radius;
+}
+
+.stripe, .stripe * {
+  display: flex;
+  align-items: center;
+}
+
+// TO DO
+/*
+- make variables e.g  user-loading-width: 20px
+                      loading-color: var
+ */
+
+
+.title{
+  &_isLoading{
+    @include mixins.is-loading(500px);
+  }
+}
+
+.username{
+  &_isLoading{
+    @include mixins.is-loading(80px);
+  }
+}
+
+.date{
+  &_isLoading{
+    @include mixins.is-loading(80px);
+    margin-right: 20px;
+  }
+}
+
+.views{
+  &_isLoading{
+    @include mixins.is-loading(80px);
+  }
+}
+
+.date, .user {
+  margin-right: 68px;
+}
+
+.user > span {
+  margin-right: 20px;
+}
+
+.views > div{
+  margin-left: 5px;
+}

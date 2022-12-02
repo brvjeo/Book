@@ -1,6 +1,15 @@
+@use './variables';
+
 @mixin flexible($justify: center, $align: center, $direction: initial){
   display: flex;
   flex-direction: $direction;
   align-items: $align;
   justify-content: $justify;
+}
+
+@mixin is-loading($width: 100px){
+  padding: variables.$global-padding-component-vertical variables.$global-padding-component-horizontal;
+  width: $width;
+  background: var(--black_a05);
+  border-radius: 15px;
 }

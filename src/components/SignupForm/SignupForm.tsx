@@ -47,7 +47,7 @@ export const SignupForm: React.FC<TProps> = ({onClose: closeModal}): React.React
                         const user = Application.createUser(userCredential.user.uid, values);
                         await application.pushUser(userCredential.user.uid, user);
 
-                        dispatch(authUser(user, []));
+                        dispatch(authUser(user));
                         Application.setUserToStorage(userCredential.user.uid);
                         navigate(`/${userCredential.user.uid}/articles`);
                     }catch (e) {

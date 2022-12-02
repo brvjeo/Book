@@ -46,11 +46,9 @@ export const LoginForm = () => {
                 async userCredential => {
                     try{
                         const user = await application.fetchUser(userCredential.user.uid);
-                        const viewed = await application.fetchViewed(user);
-
                         Application.setUserToStorage(userCredential.user.uid);
 
-                        dispatch(authUser(user, viewed));
+                        dispatch(authUser(user));
                         navigate(`/${userCredential.user.uid}/articles`);
                     }catch (e){
                         await application.deleteUser(userCredential.user);
