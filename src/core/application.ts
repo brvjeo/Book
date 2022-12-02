@@ -8,7 +8,11 @@ import {
     DocumentSnapshot,
     Firestore,
     getDoc,
+    getDocs,
     getFirestore,
+    limit,
+    query,
+    QuerySnapshot,
     setDoc
 } from "firebase/firestore";
 import {
@@ -104,6 +108,16 @@ export class Application {
         return this.readDB(DB_ROUTES.articles, id).then(doc => doc.data() as IArticle);
     }
 
+    fetchArticlesByLimit(limit: number): Promise<IArticle[]> {
+        return this.readDB(DB_ROUTES.articles, limit)
+            .then(snapshot => {
+                const articles: IArticle[] = [];
+                snapshot.forEach(doc => articles.push(doc.data() as IArticle));
+                return articles;
+            })
+            .then(articles => articles.filter(article => article !== null));
+    }
+
     signInWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
         return signInWithEmailAndPassword(this.auth, email, password);
     }
@@ -112,7 +126,7 @@ export class Application {
         return createUserWithEmailAndPassword(this.auth, email, password);
     }
 
-    pushUser(uid: string, user: IUser): Promise<any>{
+    pushUser(uid: string, user: IUser): Promise<any> {
         return this.writeDB(DB_ROUTES.users, uid, user);
     }
 
@@ -121,9 +135,16 @@ export class Application {
         return setDoc(doc(collection_, segment), data, {merge: true});
     }
 
-    readDB(route: DB_ROUTES, segment: string): Promise<DocumentSnapshot<DocumentData>> {
+    readDB(route: DB_ROUTES, limit: number): Promise<QuerySnapshot<DocumentData>>;
+    readDB(route: DB_ROUTES, segment: string): Promise<DocumentSnapshot<DocumentData>>;
+    readDB(route: DB_ROUTES, option: number | string): Promise<DocumentSnapshot<DocumentData>> | Promise<QuerySnapshot<DocumentData>> {
         const collection_ = collection(this.db, route);
-        return getDoc(doc(collection_, segment));
+        if (typeof option === 'string') {
+            return getDoc(doc(collection_, option));
+        } else {
+            const q = query(collection_, limit(option));
+            return getDocs(q);
+        }
     }
 
     deleteUser(user: User): Promise<void> {

@@ -5,6 +5,8 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {ArticlesSwiper} from '../../components/ArticlesSwiper/ArticlesSwiper';
 import {useAppSelector} from "../../store/hooks/useAppSelector";
 import {Application} from "../../core/application";
+import {ArticlesList} from '../../components/ArticlesList/ArticlesList';
+import {application} from '../../App';
 
 export const ArticlesPage: React.FC = (): React.ReactElement | null => {
     const ref = useRef(false)
@@ -14,6 +16,8 @@ export const ArticlesPage: React.FC = (): React.ReactElement | null => {
 
     useEffect(
         () => {
+            application.fetchArticlesByLimit(1).then(console.log);
+
             if(userID !== Application.getUserFromStorage()){
                 navigate('/*');
             }
@@ -29,6 +33,7 @@ export const ArticlesPage: React.FC = (): React.ReactElement | null => {
     return (
         <Layout header={<Header/>}>
             <ArticlesSwiper articles={viewed}/>
+            <ArticlesList articles={null}/>
         </Layout>
     );
 }

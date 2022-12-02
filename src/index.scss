@@ -1,6 +1,10 @@
 @use 'styles/variables';
 @import "styles/normalize";
 
+@font-face {
+  font-family: Ubuntu;
+  src: url("./fonts/Ubuntu-Medium.ttf") format('ttf');
+}
 
 * {
   box-sizing: border-box;
