@@ -1,34 +1,18 @@
 @use '../../styles/variables';
 @use '../../styles/mixins';
 
-/*
-INNER STYLES
- */
-
-$--card-width: 350px;
-$--card-height: variables.$global-card-height;
-$--card-margin: variables.$global-card-margin;
-$--card-border-radius: 30px;
-
-$--card-background: #FFFFFF;
-$--card-box-shadow: var(--box-shadow);
-$--card-font-size: var(--font-size);
-
-$--card-inner-padding-horizontal: 30px;
-$--card-inner-padding-vertical: calc($--card-inner-padding-horizontal * 0.33);
-
-
 .card {
   @include mixins.flexible(center, stretch, column);
 
-  width: $--card-width;
-  height: $--card-height;
+  width: variables.$global-card-width;
+  height: variables.$global-card-height;
 
-  background: $--card-background;
-  border-radius: $--card-border-radius;
-  box-shadow: $--card-box-shadow;
-  font-size: $--card-font-size;
-  margin: $--card-margin;
+  background: inherit;
+  border-radius: variables.$global-card-border-radius;
+  box-shadow: var(--box-shadow);
+  font-size: variables.$global-font-size;
+  line-height: variables.$global-line-height;
+  margin: variables.$global-card-margin-horizontal;
 }
 
 .header {
@@ -36,42 +20,40 @@ $--card-inner-padding-vertical: calc($--card-inner-padding-horizontal * 0.33);
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   align-items: center;
-  padding: $--card-inner-padding-vertical $--card-inner-padding-horizontal;
   border-bottom: var(--border-solid);
+  padding: variables.$global-card-inner-padding-vertical variables.$global-card-inner-padding-horizontal;
 }
 
 .content {
   @include mixins.flexible();
   flex-grow: 1;
-  padding: $--card-inner-padding-vertical $--card-inner-padding-horizontal;
   font-size: var(--font-size);
+  padding: 0 variables.$global-card-inner-padding-horizontal;
 }
 
 .buttonGroup {
+  padding: variables.$global-card-inner-padding-vertical variables.$global-card-inner-padding-horizontal;
   @include mixins.flexible(flex-end);
-  padding: 0 $--card-inner-padding-horizontal $--card-inner-padding-vertical $--card-inner-padding-horizontal;
 }
 
 .title {
-  display: -webkit-box;
+  @include mixins.line-limit(2);
   text-align: center;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  line-height: variables.$global-title-line-height;
 
-  &_isLoading {
-    @include mixins.is-loading(100%);
+  &_isLoading{
+    @include mixins.is-loading(variables.$global-loading-title-width);
   }
 }
 
-.date_isLoading, .user_isLoading {
-  @include mixins.is-loading(4em);
+.date_isLoading, .user_isLoading{
+  @include mixins.is-loading(variables.$global-loading-span-width);
 }
 
-.date_isLoading, .date {
+.date, .date_isLoading {
   justify-self: left;
 }
 
-.user_isLoading, .user {
+.user, .user_isLoading {
   justify-self: right;
 }

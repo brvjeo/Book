@@ -1,23 +1,19 @@
 @use "../../styles/variables";
 
-$--padding-horizontal: variables.$global-padding-component-horizontal;
-$--padding-vertical: variables.$global-padding-component-vertical;
-
-$--width-size-s: auto;
-$--width-size-l: 100%;
-
 .input{
   display: block;
   font-size: var(--font-size);
   outline-color: var(--black_a100);
-  border: variables.$global-border-black20;
+  border: 1px solid var(--black_a20);
+  font-size: 16px;
+  line-height: 18px;
   border-radius: variables.$global-border-radius;
-  padding: $--padding-vertical $--padding-horizontal;
+  padding: variables.$global-padding-component-vertical variables.$global-padding-component-horizontal;
 
   &-size_S{
-    width: variables.$global-width-component-size-m;
+    width: variables.$global-input-width-size-s;
   }
   &-size_L{
-    width: $--width-size-l;
+    width: variables.$global-input-width-size-l;
   }
 }

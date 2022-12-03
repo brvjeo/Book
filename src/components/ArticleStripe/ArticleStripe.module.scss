@@ -1,59 +1,45 @@
 @use '../../styles/variables';
 @use '../../styles/mixins';
 
-.stripe {
-  background: #FFFFFF;
-  padding: variables.$global-padding-component-vertical variables.$global-padding-component-horizontal;
-  justify-content: space-between;
-  box-shadow: var(--box-shadow);
-  border-radius: variables.$global-border-radius;
+$--stripe-padding-vertical: variables.$global-padding-component-vertical;
+$--stripe-padding-horizontal: variables.$global-padding-component-horizontal;
+
+.stripe * {
+  @include mixins.flexible(unset, center);
 }
 
-.stripe, .stripe * {
+.stripe {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 55% 45%;
+  background: inherit;
+  padding: $--stripe-padding-vertical $--stripe-padding-horizontal;
+  box-shadow: var(--box-shadow);
+  font-size: variables.$global-stripe-font-size;
+  line-height: variables.$global-stripe-line-height;
+  border-radius: variables.$global-stripe-border-radius;
+}
+
+.infoGroup{
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 2fr 1fr 1fr;
+  justify-items: right;
+}
+
+.titleWrapper{
   display: flex;
   align-items: center;
 }
 
-// TO DO
-/*
-- make variables e.g  user-loading-width: 20px
-                      loading-color: var
- */
-
-
-.title{
-  &_isLoading{
-    @include mixins.is-loading(500px);
-  }
+.username, .username_isLoading{
+  margin-right: 1em;
 }
 
-.username{
-  &_isLoading{
-    @include mixins.is-loading(80px);
-  }
+.title_isLoading{
+  @include mixins.is-loading(variables.$global-loading-title-width);
 }
 
-.date{
-  &_isLoading{
-    @include mixins.is-loading(80px);
-    margin-right: 20px;
-  }
-}
-
-.views{
-  &_isLoading{
-    @include mixins.is-loading(80px);
-  }
-}
-
-.date, .user {
-  margin-right: 68px;
-}
-
-.user > span {
-  margin-right: 20px;
-}
-
-.views > div{
-  margin-left: 5px;
+.username_isLoading, .date_isLoading, .views_isLoading{
+  @include mixins.is-loading(variables.$global-loading-span-width)
 }

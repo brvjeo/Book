@@ -7,9 +7,16 @@
   justify-content: $justify;
 }
 
-@mixin is-loading($width: 100px){
+@mixin is-loading($width){
   padding: variables.$global-padding-component-vertical variables.$global-padding-component-horizontal;
   width: $width;
   background: var(--black_a05);
   border-radius: 15px;
+}
+
+@mixin line-limit($length){
+  display: -webkit-box;
+  -webkit-line-clamp: $length;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

@@ -7,6 +7,7 @@ import {useAppSelector} from "../../store/hooks/useAppSelector";
 import {ArticlesList} from '../../components/ArticlesList/ArticlesList';
 import {ApplicationContext} from "../../App";
 import {Application, IArticle, IUser} from "../../core/application";
+import styles from './ArticlesPage.module.scss';
 
 type TArticlesState = {
     viewed: IArticle[] | null,
@@ -50,8 +51,10 @@ export const ArticlesPage: React.FC = (): React.ReactElement | null => {
 
     return (
         <Layout header={<Header/>}>
-            <ArticlesSwiper articles={articlesState.viewed}/>
-            <ArticlesList articles={articlesState.articles}/>
+            <div className={styles.wrapper}>
+                <ArticlesSwiper articles={articlesState.viewed}/>
+                <ArticlesList articles={articlesState.articles}/>
+            </div>
         </Layout>
     );
 }

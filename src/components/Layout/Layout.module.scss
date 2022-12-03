@@ -1,11 +1,17 @@
-.header{
-  margin-bottom: 5px;
-  border-bottom: 1px solid white;
-  background: #FFFFFF;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 0px 20px 1px var(--black_a10);
-}
+@use "../../styles/mixins";
+@use "../../styles/variables";
 
+.header{
+  background: inherit;
+  border-radius: 0 0 variables.$global-header-border-radius variables.$global-header-border-radius;
+  box-shadow: var(--box-shadow);
+
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
 .main{
-  padding: 0;
+  flex-grow: 1;
 }

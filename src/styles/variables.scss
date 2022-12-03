@@ -1,14 +1,115 @@
-$global-padding-component-vertical: 10px;
+/*
+GLOBAL STYLES
+*/
+$global-font-size: 14px;
+$global-line-height: 16px;
+
+$global-title-line-height: 25px;
+$global-title-font-size: 20px;
+
+$global-padding-component-vertical: 0.625em;
 $global-padding-component-horizontal: 1em;
 
-$global-font-size: 14px;
-
-$global-border-black20: var(--border-width) solid var(--black_a20);
+$global-background-color: #FFFFFF;
 
 $global-border-radius: 5px;
+//
 
-$global-width-component-size-m: 170px;
+// Loading items
+$global-loading-span-width: 4em;
+$global-loading-paragraph-width: 100%;
+$global-loading-title-width: 100%;
+//
 
+//Container
+$global-container-margin-horizontal: auto;
+$global-container-margin-vertical: 0;
+
+$global-container-padding-horizontal: 40px;
+$global-container-padding-vertical: 0;
+
+$global-container-max-width: 1440px;
+//
+
+// Avatar
+$global-avatar-size-s: 36px;
+$global-avatar-size-m: 50px;
+$global-avatar-size-l: 70px;
+//
+
+// Logo
+$global-logo-width: auto;
+$global-logo-height: 30px;
+
+$global-logo-margin-vertical: 30px;
+$global-logo-margin-horizontal: 0;
+//
+
+//Header
+$global-header-padding-vertical: 10px;
+$global-header-padding-horizontal: 0;
+
+$global-header-margin-vertical: 0;
+$global-header-margin-horizontal: 0;
+
+$global-header-border-radius: 10px;
+//
+
+//Button
+$global-button-padding-vertical: $global-padding-component-vertical;
+$global-button-padding-horizontal: $global-padding-component-horizontal;
+
+$global-button-margin-vertical: 0;
+$global-button-margin-horizontal: 0;
+
+$global-button-border-radius-size-ml: 7px;
+$global-button-border-radius-size-s: 14px;
+//
+
+
+// Card
+$global-card-width: 360px;
 $global-card-height: 180px;
-$global-card-margin: 15px;
-$global-card-summary-height: calc($global-card-height + $global-card-margin * 2);
+
+$global-card-margin-vertical: 30px;
+$global-card-margin-horizontal: 30px;
+
+$global-card-border-radius: 30px;
+
+$global-card-inner-padding-vertical: 10px;
+$global-card-inner-padding-horizontal: 20px;
+//
+
+// Swiper
+$global-swiper-column-gap: 45px;
+//
+
+// Stripe
+
+$global-stripe-border-radius: 10px;
+$global-stripe-line-height: $global-line-height;
+$global-stripe-font-size: $global-font-size;
+//
+
+// List
+$global-list-row-gap: 20px;
+//
+
+// Form
+$global-form-width: 350px;
+$global-form-height: 350px;
+$global-form-border-radius: 0;
+
+$global-form-padding-vertical: 0;
+$global-form-padding-horizontal: 30px;
+
+//
+
+// Input
+$global-input-width-size-s: auto;
+$global-input-width-size-l: 100%;
+$global-input-border-radius: 15px;
+//
+
+$global-swiper-dimension: calc($global-card-height + $global-card-margin-vertical * 2);
+$global-header-dimension: calc($global-button-padding-vertical * 2 + $global-line-height + $global-header-padding-vertical * 2);

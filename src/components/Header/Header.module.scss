@@ -1,17 +1,26 @@
 @use "../../styles/mixins";
+@use "../../styles/variables";
 
 .wrapper{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 10px 0;
+  padding: variables.$global-header-padding-vertical variables.$global-header-padding-horizontal;
 }
 
-.logoWrapper{
+.wrapper a{
+  display: flex;
+}
+
+.logo{
+  @include mixins.flexible();
   justify-self: center;
-  @include mixins.flexible()
 }
 
-.buttonCreate{
+.logo svg{
+  height: variables.$global-logo-height;
+}
+
+.wrapper > a{
   justify-self: left;
 }
 

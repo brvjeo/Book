@@ -6,6 +6,7 @@ import {ArticlesPage} from './pages/Articles/ArticlesPage';
 import {useAppDispatch} from './store/hooks/useAppDispatch';
 import {authenticateUserOnReloadThunk} from "./store/user/thunks/authenticateUserOnReloadThunk";
 import {initializeApplication} from "./core/application";
+import {EditorPage} from './pages/Editor/EditorPage';
 
 export const application = initializeApplication();
 export const ApplicationContext = React.createContext(application);
@@ -14,7 +15,12 @@ export const App = () => {
     const dispatch = useAppDispatch();
 
     useEffect(
-        () => dispatch(authenticateUserOnReloadThunk(application)),
+        () => {
+            setTimeout(
+                () => dispatch(authenticateUserOnReloadThunk(application)),
+                2000
+            );
+        },
         []
     );
 
@@ -25,6 +31,7 @@ export const App = () => {
                     <Route path={'/'} element={<LoginPage/>}/>
                     <Route path={'*'} element={<NotFoundPage/>}/>
                     <Route path={'/:userID/articles'} element={<ArticlesPage/>}/>
+                    <Route path={'/:userID/editor'} element={<EditorPage/>}/>
                 </Routes>
             </BrowserRouter>
         </ApplicationContext.Provider>

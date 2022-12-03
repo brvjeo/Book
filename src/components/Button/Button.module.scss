@@ -1,46 +1,38 @@
 @use "../../styles/variables";
 
-$--width-size-sm: auto;
-$--width-size-l: 100%;
 
-$--padding-horizontal-size-s: 1em;
-$--padding-horizontal-size-m: 2.5em;
+$--padding-horizontal: variables.$global-button-padding-horizontal;
+$--padding-vertical: variables.$global-button-padding-vertical;
 
-$--border-radius-size-s: 18px;
-$--border-radius-size-ml: variables.$global-border-radius;
-
-$--padding-vertical: variables.$global-padding-component-vertical;
+$--font-size: variables.$global-font-size;
+$--line-height: variables.$global-line-height;
 
 .button {
   display: block;
-  font-size: var(--font-size);
-  padding: variables.$global-padding-component-vertical 0;
-  color: white;
-  background: black;
-
-  &_isLoading{
-    height: calc($--padding-vertical * 2 + 1em);
-    width: 3.7em !important;
-  }
+  background: var(--black_a100);
+  color: #FFFFFF;
+  line-height: $--line-height;
+  font-size: $--font-size;
 
   &-size_S {
-    width: $--width-size-sm;
-    font-size: calc(var(--font-size) * 0.85);
-    padding-right: $--padding-horizontal-size-s;
-    padding-left: $--padding-horizontal-size-s;
-    border-radius: $--border-radius-size-s;
+    border-radius: variables.$global-button-border-radius-size-s;
+    padding: $--padding-vertical $--padding-horizontal;
+    font-size: calc($--font-size * 0.9);
+    line-height: calc($--font-size * 0.9);
   }
 
   &-size_M {
-    width: $--width-size-sm;
-    padding-right: $--padding-horizontal-size-m;
-    padding-left: $--padding-horizontal-size-m;
-    border-radius: $--border-radius-size-ml;
+    border-radius: variables.$global-button-border-radius-size-ml;
+    padding: $--padding-vertical calc($--padding-horizontal * 2);
   }
 
   &-size_L {
-    width: $--width-size-l;
-    border-radius: $--border-radius-size-ml;
+    border-radius: variables.$global-button-border-radius-size-ml;
+    padding: $--padding-vertical 0;
+    width: 100%;
   }
 
+  &_isLoading {
+    color: rgba(0, 0, 0, 0);
+  }
 }

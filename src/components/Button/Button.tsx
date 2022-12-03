@@ -4,7 +4,7 @@ import styles from './Button.module.scss';
 import {BUTTON_SIZE} from '../../enums';
 
 type TProps = {
-    type: 'submit' | 'button',
+    type?: 'submit' | 'button',
     children: React.ReactNode,
     className?: string,
     id?: string,
@@ -16,7 +16,7 @@ type TProps = {
 
 export const Button: React.FC<TProps> = (
     {
-        type,
+        type = 'button',
         children,
         className,
         id,
@@ -26,6 +26,6 @@ export const Button: React.FC<TProps> = (
         isLoading
     }): React.ReactElement | null => {
     return (
-        <button onClick={onClick} type={type} id={id} className={classNames(styles.button,styles[size],className, isLoading && styles.button_isLoading)} disabled={disabled}>{!isLoading && children}</button>
+        <button onClick={onClick} type={type} id={id} className={classNames(styles.button,styles[size],className, isLoading && styles.button_isLoading)} disabled={disabled}>{children}</button>
     );
 }

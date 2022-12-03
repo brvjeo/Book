@@ -3,14 +3,12 @@
 
 $--padding-horizontal: variables.$global-padding-component-horizontal;
 $--padding-vertical: variables.$global-padding-component-vertical;
-$--background: #FFFFFF;
-
 
 .selector{
   font-size: var(--font-size);
   position: relative;
   width: variables.$global-width-component-size-m;
-  background: $--background;
+  background: inherit;
   border-radius: variables.$global-border-radius;
   border: variables.$global-border-black20;
 }

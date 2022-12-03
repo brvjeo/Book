@@ -12,7 +12,7 @@ $--width: variables.$global-width-component-size-m;
   @include mixins.flexible();
   border: variables.$global-border-black20;
   border-radius: $--border-radius;
-  background: #FFFFFF;
+  background: inherit;
   width: $--width;
   cursor: pointer;
 
