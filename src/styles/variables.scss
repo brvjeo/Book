@@ -111,5 +111,12 @@ $global-input-width-size-l: 100%;
 $global-input-border-radius: 15px;
 //
 
+// Editor
+$global-editor-padding-vertical: 25px;
+$global-editor-padding-horizontal: 25px;
+$global-editor-font-size: $global-title-line-height;
+$global-editor-line-height: $global-title-font-size;
+//
+
 $global-swiper-dimension: calc($global-card-height + $global-card-margin-vertical * 2);
 $global-header-dimension: calc($global-button-padding-vertical * 2 + $global-line-height + $global-header-padding-vertical * 2);

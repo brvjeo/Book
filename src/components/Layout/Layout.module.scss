@@ -2,7 +2,7 @@
 @use "../../styles/variables";
 
 .header{
-  background: inherit;
+  background: variables.$global-background-color;
   border-radius: 0 0 variables.$global-header-border-radius variables.$global-header-border-radius;
   box-shadow: var(--box-shadow);
 
@@ -14,4 +14,5 @@
 }
 .main{
   flex-grow: 1;
+  @include mixins.flexible(flex-start, stretch, column)
 }

@@ -1,5 +1,31 @@
-.container{
-  min-height: 100vh;
+@use '../../styles/mixins';
+@use '../../styles/variables';
+
+.container {
   display: flex;
-  justify-content: center;
+  margin-top: variables.$global-header-dimension;
+  flex-grow: 1;
+}
+
+.editor {
+  @include mixins.flexible(flex-start, stretch, column);
+  flex-grow: 1;
+  padding: variables.$global-editor-padding-vertical variables.$global-editor-padding-horizontal;
+  box-shadow: 0 0px 20px 1px var(--black_a10);
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+.input{
+  margin-bottom: 20px;
+}
+
+.textarea {
+  flex-grow: 1;
+  resize: none;
+}
+
+.input, .textarea{
+  font-size: variables.$global-title-font-size;
+  line-height: variables.$global-title-line-height;
 }

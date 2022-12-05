@@ -14,7 +14,7 @@ html, body, #root{
   min-height: 100vh;
 }
 
-body{
+html,body{
   background: variables.$global-background-color;
 }
 

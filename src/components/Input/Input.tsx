@@ -13,7 +13,8 @@ type TProps = {
     placeholder?: string,
     name?: string,
     size?: INPUT_SIZE,
-    disabled?: boolean
+    disabled?: boolean,
+    isMultiline?: boolean
 }
 
 export const Input: React.FC<TProps> = (
@@ -27,19 +28,35 @@ export const Input: React.FC<TProps> = (
         placeholder,
         name,
         size = INPUT_SIZE.S,
-        disabled
+        disabled,
+        isMultiline= false
     }): React.ReactElement | null => {
-    return (
-        <input
-            type={type}
-            id={id}
-            name={name}
-            className={classNames(styles.input, styles[size], className)}
-            value={value}
-            defaultValue={defaultValue}
-            onChange={onChange}
-            placeholder={placeholder}
-            disabled={disabled}
-        />
-    );
+    if(isMultiline){
+        return (
+            <textarea
+                id={id}
+                name={name}
+                className={classNames(styles.input, styles[size], className)}
+                value={value}
+                defaultValue={defaultValue}
+                onChange={onChange}
+                placeholder={placeholder}
+                disabled={disabled}
+            />
+        )
+    }else{
+        return (
+            <input
+                type={type}
+                id={id}
+                name={name}
+                className={classNames(styles.input, styles[size], className)}
+                value={value}
+                defaultValue={defaultValue}
+                onChange={onChange}
+                placeholder={placeholder}
+                disabled={disabled}
+            />
+        );
+    }
 }

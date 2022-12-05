@@ -1,13 +1,15 @@
 import {Layout} from '../../components/Layout/Layout';
 import {Header} from '../../components/Header/Header';
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {ArticlesSwiper} from '../../components/ArticlesSwiper/ArticlesSwiper';
 import {useAppSelector} from "../../store/hooks/useAppSelector";
 import {ArticlesList} from '../../components/ArticlesList/ArticlesList';
 import {ApplicationContext} from "../../App";
 import {Application, IArticle, IUser} from "../../core/application";
 import styles from './ArticlesPage.module.scss';
+import {Button} from "../../components/Button/Button";
+import {BUTTON_SIZE} from "../../enums";
 
 type TArticlesState = {
     viewed: IArticle[] | null,
@@ -50,7 +52,17 @@ export const ArticlesPage: React.FC = (): React.ReactElement | null => {
     )
 
     return (
-        <Layout header={<Header/>}>
+        <Layout header={(
+            <Header>
+                {
+                    (route) => (
+                        <Link to={`/${route}/editor`}>
+                            <Button size={BUTTON_SIZE.M}>Create</Button>
+                        </Link>
+                    )
+                }
+            </Header>
+        )}>
             <div className={styles.wrapper}>
                 <ArticlesSwiper articles={articlesState.viewed}/>
                 <ArticlesList articles={articlesState.articles}/>
