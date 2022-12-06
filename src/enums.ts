@@ -23,5 +23,11 @@ export enum AUTH_ERRORS {
 
 export enum DB_ROUTES {
     users = 'users',
-    articles = 'articles'
+    articles = 'articles',
+    content = 'content'
+}
+
+export enum CONTENT_TYPE{
+    paragraph,
+    title
 }

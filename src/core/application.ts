@@ -25,7 +25,8 @@ import {
     UserCredential
 } from "firebase/auth";
 import {firebaseConfig} from '../core/config';
-import {DB_ROUTES} from "../enums";
+import {CONTENT_TYPE, DB_ROUTES} from "../enums";
+import {TEditorState} from "../pages/Editor/EditorPage";
 
 export interface IUser {
     id: string,
@@ -38,7 +39,7 @@ export interface IUser {
 
 export interface IArticle {
     id: string,
-    content: string | null,
+    content: string,
     info: {
         user: IUser,
         date: string,
@@ -46,6 +47,16 @@ export interface IArticle {
         topics: string[],
         title: string
     }
+}
+
+export interface IArticleContent {
+    id: string,
+    nodes: IArticleNode[]
+}
+
+export interface IArticleNode {
+    type: CONTENT_TYPE,
+    content: string
 }
 
 export class Application {
@@ -70,17 +81,45 @@ export class Application {
         };
     }
 
-    static createArticle(user: IUser, title: string): IArticle {
-        return {
-            id: uuid(),
-            content: null,
+    async createArticle(uid: string, user: IUser, values: TEditorState): Promise<IUser> {
+        const contentID: string = uuid();
+        const articleID: string = uuid();
+
+        const nodes = this.buildArticle(values.title, values.content);
+        const content: IArticleContent = {
+            nodes,
+            id: contentID
+        }
+        const article: IArticle = {
+            id: articleID,
+            content: contentID,
             info: {
                 user,
-                date: new Date().toLocaleDateString(),
+                date: new Date().toLocaleDateString().split('.').join('-'),
+                title: content.nodes[0].content,
                 views: 0,
-                topics: [],
-                title
+                topics: []
             }
+        }
+
+        const userCopy: IUser = {
+            id: user.id,
+            viewed: user.viewed.slice(),
+            articles: user.articles.slice(),
+            name: user.name,
+            lastname: user.lastname,
+            email: user.email
+        }
+        userCopy.articles.push(articleID);
+
+        try {
+            await this.pushArticle(article.id, article);
+            await this.pushArticleContent(content.id, content);
+            await this.pushUser(uid, userCopy);
+
+            return Promise.resolve(userCopy);
+        } catch (e) {
+            return Promise.reject(e);
         }
     }
 
@@ -130,6 +169,14 @@ export class Application {
         return this.writeDB(DB_ROUTES.users, uid, user);
     }
 
+    pushArticle(id: string, article: IArticle): Promise<any> {
+        return this.writeDB(DB_ROUTES.articles, id, article);
+    }
+
+    pushArticleContent(id: string, content: IArticleContent): Promise<any> {
+        return this.writeDB(DB_ROUTES.content, id, content);
+    }
+
     writeDB(route: DB_ROUTES, segment: string, data: any) {
         const collection_ = collection(this.db, route);
         return setDoc(doc(collection_, segment), data, {merge: true});
@@ -149,6 +196,25 @@ export class Application {
 
     deleteUser(user: User): Promise<void> {
         return deleteUser(user);
+    }
+
+    buildArticle(title: string, content: string): IArticleNode[] {
+        const paragraphs = content.split('\n').filter(str => !!str.length).map(
+            (paragraph): IArticleNode => (
+                {
+                    type: CONTENT_TYPE.paragraph,
+                    content: paragraph
+                }
+            )
+        );
+
+        return [
+            {
+                type: CONTENT_TYPE.title,
+                content: title
+            },
+            ...paragraphs
+        ] as IArticleNode[];
     }
 }
 

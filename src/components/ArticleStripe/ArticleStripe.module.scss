@@ -43,3 +43,7 @@ $--stripe-padding-horizontal: variables.$global-padding-component-horizontal;
 .username_isLoading, .date_isLoading, .views_isLoading{
   @include mixins.is-loading(variables.$global-loading-span-width)
 }
+
+.viewsNumber{
+  margin-right: 3px;
+}

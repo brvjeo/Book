@@ -35,7 +35,7 @@ export const ArticleStripe: React.FC<TProps> = ({article}): React.ReactElement |
                 </span>
                 <div className={classNames(article ? styles.views : styles.views_isLoading)}>
                     {
-                        !!article && article.info.views
+                        !!article && <span className={styles.viewsNumber}>{article.info.views}</span>
                     }
                     {
                         !!article && <div>{svgEye}</div>
