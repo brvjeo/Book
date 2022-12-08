@@ -1,0 +1,11 @@
+@use '../../styles/mixins';
+@use '../../styles/variables';
+
+.badge {
+  @include mixins.flexible(flex-start, center, column);
+  gap: 2em;
+}
+
+.email, .username {
+  text-align: center;
+}

@@ -8,11 +8,7 @@ export const authenticateUserOnReloadThunk = (application: Application) : ThunkA
 
     if(userIdFromStorage){
         application.fetchUser(userIdFromStorage)
-            .then(
-                user => dispatch(authUser(user))
-            )
-            .catch(
-                e => console.log(JSON.stringify(e))
-            );
+            .then(user => dispatch(authUser(user)))
+            .catch(_ => null);
     }
 }

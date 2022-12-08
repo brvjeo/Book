@@ -21,6 +21,12 @@ export enum AUTH_ERRORS {
     userExists = 'USER_EXISTS'
 }
 
+export enum DATABASE_ERRORS{
+    invalidArticle = "ARTICLE IS INVALID OR DOES NOT EXIST",
+    invalidUser = "USER IS INVALID OR DOES NOT EXIST",
+    accessDenied = "NO ACCESS TO WRITE IN DATABASE"
+}
+
 export enum DB_ROUTES {
     users = 'users',
     articles = 'articles',

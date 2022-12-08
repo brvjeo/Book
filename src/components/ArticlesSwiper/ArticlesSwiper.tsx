@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ArticlesSwiper.module.scss';
-import {IArticle} from "../../core/application";
+import {IArticle} from "../../types";
 import {ArticleCard} from "../ArticleCard/ArticleCard";
 import {emptyArray} from "../../utils/utils";
 

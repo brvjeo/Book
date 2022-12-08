@@ -6,41 +6,46 @@ import {ArticlesSwiper} from '../../components/ArticlesSwiper/ArticlesSwiper';
 import {useAppSelector} from "../../store/hooks/useAppSelector";
 import {ArticlesList} from '../../components/ArticlesList/ArticlesList';
 import {ApplicationContext} from "../../App";
-import {Application, IArticle, IUser} from "../../core/application";
+import {Application} from "../../core/application";
 import styles from './ArticlesPage.module.scss';
 import {Button} from "../../components/Button/Button";
 import {BUTTON_SIZE} from "../../enums";
-
-type TArticlesState = {
-    viewed: IArticle[] | null,
-    articles: IArticle[] | null
-}
+import {IArticle, IUser} from '../../types';
 
 export const ArticlesPage: React.FC = (): React.ReactElement | null => {
     const application = useContext(ApplicationContext);
+
     const ref = useRef(false)
     const navigate = useNavigate();
     const {userID} = useParams();
     const {currentUser} = useAppSelector(state => state.user);
-    const [articlesState, setArticlesState] = useState<TArticlesState>({viewed: null, articles: null})
-    const [articlesLimit, setArticlesLimit] = useState(10);
+    const [state, setState] = useState<
+        {
+            viewed: IArticle[] | null,
+            articles: IArticle[] | null
+        }
+    >({viewed: null, articles: null})
 
     const fetchArticles = async (user: IUser) => {
-        const viewed = await application.fetchViewed(user);
-        const articles = await application.fetchArticlesByLimit(articlesLimit);
+        try {
+            const viewed = await application.fetchArticles(user.viewed);
+            const articles = await application.fetchArticlesByLimit(10);
 
-        setArticlesState({viewed, articles});
+            setState({articles, viewed});
+        } catch (e) {
+            console.log("DISPLAY ERROR IN ARTICLES");
+        }
     }
 
     useEffect(
         () => {
-            if(userID !== Application.getUserFromStorage()){
+            if (userID !== Application.getUserFromStorage()) {
                 navigate('/*');
             }
 
-            if(ref.current && currentUser === null){
+            if (ref.current && currentUser === null) {
                 navigate('/');
-            }else{
+            } else {
                 ref.current = true;
             }
 
@@ -64,8 +69,8 @@ export const ArticlesPage: React.FC = (): React.ReactElement | null => {
             </Header>
         )}>
             <div className={styles.wrapper}>
-                <ArticlesSwiper articles={articlesState.viewed}/>
-                <ArticlesList articles={articlesState.articles}/>
+                <ArticlesSwiper articles={state.viewed}/>
+                <ArticlesList articles={state.articles}/>
             </div>
         </Layout>
     );

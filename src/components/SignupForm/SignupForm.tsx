@@ -3,7 +3,7 @@ import {Form, Formik} from 'formik';
 import {Input} from '../Input/Input';
 import {Button} from '../Button/Button';
 import styles from './SignupForm.module.scss';
-import {BUTTON_SIZE, INPUT_SIZE} from '../../enums';
+import {BUTTON_SIZE, DATABASE_ERRORS, INPUT_SIZE} from '../../enums';
 import {ApplicationContext} from '../../App';
 import {useNavigate} from 'react-router-dom';
 import {useDelay} from '../../hooks/useDelay';
@@ -11,19 +11,11 @@ import {svgLogo} from '../../svgSprite';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
 import {Application} from "../../core/application";
 import {authUser} from "../../store/user/userSlicer";
+import {IUser} from '../../types';
+import * as uuid from 'uuid';
 
 type TProps = {
     onClose: () => void
-}
-export type TFormValues = {
-    name: string,
-    lastname: string,
-    email: string,
-    password: string
-}
-type TErrorState = {
-    dispatched: boolean,
-    error: string | null
 }
 
 export const SignupForm: React.FC<TProps> = ({onClose: closeModal}): React.ReactElement | null => {
@@ -31,34 +23,33 @@ export const SignupForm: React.FC<TProps> = ({onClose: closeModal}): React.React
     const navigate = useNavigate();
     const application = useContext(ApplicationContext);
 
-    const initialErrorState: TErrorState = {dispatched: false, error: null};
-    const [errorState, setErrorState] = useDelay(initialErrorState, 12000);
-
     const nameID = useId();
     const emailID = useId();
     const lastnameID = useId();
     const passwordID = useId();
 
-    const signupHandler = (values: TFormValues) => {
+    const signupHandler = <T extends {
+        name: string,
+        lastname: string,
+        email: string,
+        password: string
+    }>(values: T) => {
         application.createUserWithEmailAndPassword(values.email, values.password)
             .then(
                 async userCredential => {
+                    const newUser = application.generateUser(userCredential.user.uid, values);
                     try{
-                        const user = Application.createUser(userCredential.user.uid, values);
-                        await application.pushUser(userCredential.user.uid, user);
-
-                        dispatch(authUser(user));
-                        Application.setUserToStorage(userCredential.user.uid);
-                        navigate(`/${userCredential.user.uid}/articles`);
+                        await application.pushUser(newUser);
+                        dispatch(authUser(newUser));
+                        Application.setUserToStorage(newUser.uid);
+                        navigate(`${newUser.uid}/articles`);
                     }catch (e) {
                         await application.deleteUser(userCredential.user);
                         return Promise.reject(e);
                     }
                 }
             )
-            .catch(
-                e => console.log(JSON.stringify(e))
-            )
+            .catch(console.log)
     }
 
     return (
@@ -69,7 +60,7 @@ export const SignupForm: React.FC<TProps> = ({onClose: closeModal}): React.React
                     lastname: '',
                     email: '',
                     password: ''
-                } as TFormValues
+                }
             }
             onSubmit={signupHandler}>
             {
@@ -113,9 +104,6 @@ export const SignupForm: React.FC<TProps> = ({onClose: closeModal}): React.React
                             onChange={handleChange}
                             type={'password'}
                             size={INPUT_SIZE.L}/>
-                        {
-                            errorState.dispatched && <div className={styles.error}>{errorState.error}</div>
-                        }
                         <Button className={styles.button} type={'submit'} size={BUTTON_SIZE.M}>Create</Button>
                     </Form>
                 )

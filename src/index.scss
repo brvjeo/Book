@@ -27,6 +27,7 @@ html,body{
   --black_a10: rgba(0, 0, 0, 0.10);
   --black_a20: rgba(0, 0, 0, 0.20);
   --black_a50: rgba(0, 0, 0, 0.50);
+  --black_a80: rgba(0, 0, 0, 0.80);
   --black_a100: rgba(0, 0, 0, 1);
 }
 
@@ -42,4 +43,28 @@ html,body{
   padding: variables.$global-container-padding-vertical variables.$global-container-padding-horizontal;
   max-width: variables.$global-container-max-width;
   margin: variables.$global-container-margin-vertical variables.$global-container-margin-horizontal;
+}
+
+.article{
+  &-block {
+
+  }
+
+  &-title{
+    text-align: center;
+    margin: 2em 0 2.5em 0;
+    font-size: 2.5em;
+  }
+
+  &-paragraph{
+    font-size: 1.7em;
+  }
+  &-paragraph{
+    display: block;
+    text-indent: 2em;
+    line-height: 1.9em;
+    text-align: justify;
+    margin-bottom: 1em;
+    color: var(--black_a80);
+  }
 }

@@ -3,7 +3,7 @@ import {Form, Formik} from 'formik';
 import styles from './LoginForm.module.scss';
 import {Button} from '../Button/Button';
 import {Input} from '../Input/Input';
-import {BUTTON_SIZE, INPUT_SIZE} from '../../enums';
+import {BUTTON_SIZE, DATABASE_ERRORS, INPUT_SIZE} from '../../enums';
 import {useToggle} from '../../hooks/useToggle';
 import {SignupModal} from '../SignupModal/SignupModal';
 import {useDelay} from '../../hooks/useDelay';
@@ -14,23 +14,12 @@ import {useAppDispatch} from '../../store/hooks/useAppDispatch';
 import {authUser} from '../../store/user/userSlicer';
 import {Application} from "../../core/application";
 
-type TFormValues = {
-    email: string,
-    password: string
-}
-
-type TErrorState = {
-    dispatched: boolean,
-    error: string | null
-}
 
 export const LoginForm = () => {
     const application = useContext(ApplicationContext);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const initialErrorState: TErrorState = {dispatched: false, error: null}
-    const [errorState, setErrorState] = useDelay(initialErrorState, 12000);
     const {
         state: modalState,
         setTrue: setModalVisible,
@@ -40,30 +29,27 @@ export const LoginForm = () => {
     const emailID = React.useId();
     const passwordID = React.useId();
 
-    const loginHandler = (values: TFormValues) => {
+    const loginHandler = <T extends { email: string, password: string }>(values: T) => {
         application.signInWithEmailAndPassword(values.email, values.password)
             .then(
                 async userCredential => {
-                    try{
+                    try {
                         const user = await application.fetchUser(userCredential.user.uid);
-                        Application.setUserToStorage(userCredential.user.uid);
 
                         dispatch(authUser(user));
-                        navigate(`/${userCredential.user.uid}/articles`);
-                    }catch (e){
-                        await application.deleteUser(userCredential.user);
-                        return e;
+                        Application.setUserToStorage(user.uid);
+                        navigate(`${user.uid}/articles`);
+                    }catch (e) {
+                        return Promise.reject(e);
                     }
                 }
             )
-            .catch(
-                e => console.log(JSON.stringify(e))
-            );
+            .catch(console.log);
     }
 
     return (
         <Formik
-            initialValues={{email: '', password: ''} as TFormValues}
+            initialValues={{email: '', password: ''}}
             onSubmit={loginHandler}
         >{
             ({handleChange, values}) => (
@@ -87,9 +73,6 @@ export const LoginForm = () => {
                         value={values.password}
                         onChange={handleChange}
                         size={INPUT_SIZE.L}/>
-                    {
-                        errorState.dispatched && <div className={styles.error}>{errorState.error}</div>
-                    }
                     <Button className={styles.button} type={'submit'} size={BUTTON_SIZE.L}>Log in</Button>
                     <Button className={styles.button} type={'button'} size={BUTTON_SIZE.L} onClick={setModalVisible}>Sign
                         up</Button>

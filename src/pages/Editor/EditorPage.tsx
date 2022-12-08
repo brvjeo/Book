@@ -1,4 +1,5 @@
 import React, {BaseSyntheticEvent, useCallback, useContext, useState} from 'react';
+import _ from 'lodash';
 import {Layout} from '../../components/Layout/Layout';
 import {Header} from '../../components/Header/Header';
 import styles from './EditorPage.module.scss';
@@ -7,26 +8,48 @@ import {BUTTON_SIZE} from "../../enums";
 import {Input} from "../../components/Input/Input";
 import {ApplicationContext} from "../../App";
 import {useAppSelector} from "../../store/hooks/useAppSelector";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../store/hooks/useAppDispatch";
 import {authUser} from "../../store/user/userSlicer";
+import {IUser, TArticleRecord} from '../../types';
 
 type TProps = {}
-export type TEditorState = {
-    title: string,
-    content: string
-}
 export const EditorPage: React.FC<TProps> = (): React.ReactElement | null => {
-    const {userID: uid} = useParams();
     const navigate = useNavigate();
     const application = useContext(ApplicationContext);
     const dispatch = useAppDispatch();
     const user = useAppSelector(state => state.user.currentUser);
-    const [state, setState] = useState<TEditorState>(
+    const [state, setState] = useState<{ title: string, content: string }>(
         {
             title: '',
             content: ''
         }
+    );
+
+    const creatingHandler = useCallback(
+        async () => {
+            if (!user) return;
+            if (!state.content.length || !state.title.length) return;
+
+            const {article, content} = application.generateArticleWithContent(user, state);
+
+            try {
+                await application.pushArticle(article);
+                await application.pushContent(content);
+
+                const userCopy: IUser = _.cloneDeep(user);
+
+                userCopy.articles.push(article.id);
+
+                await application.pushUser(userCopy);
+                dispatch(authUser(userCopy));
+            } catch (e) {
+                console.log(e);
+            } finally {
+                navigate('/');
+            }
+        },
+        [user, state, application]
     );
 
     const titleHandler = useCallback(
@@ -40,18 +63,6 @@ export const EditorPage: React.FC<TProps> = (): React.ReactElement | null => {
         },
         []
     );
-
-    const createArticleHandler = async () => {
-        if (user !== null && uid !== undefined) {
-            try {
-                const currentUser = await application.createArticle(uid, user, state);
-                dispatch(authUser(currentUser));
-                navigate(`/${uid}/articles`);
-            }catch (e) {
-                console.log(e);
-            }
-        }
-    }
 
     const contentHandler = useCallback(
         (e: BaseSyntheticEvent) => {
@@ -69,7 +80,7 @@ export const EditorPage: React.FC<TProps> = (): React.ReactElement | null => {
         <Layout header={(
             <Header>
                 {
-                    route => <Button onClick={createArticleHandler} size={BUTTON_SIZE.M}>Save</Button>
+                    route => <Button onClick={creatingHandler} size={BUTTON_SIZE.M}>Save</Button>
                 }
             </Header>
         )}>

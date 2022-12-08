@@ -1,5 +1,5 @@
 import React from 'react';
-import {IArticle} from "../../core/application";
+import {IArticle} from "../../types";
 import styles from './ArticleStripe.module.scss';
 import {Avatar} from "../Avatar/Avatar";
 import {svgEye} from "../../svgSprite";

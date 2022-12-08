@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './ArticleCard.module.scss';
 import {Button} from '../Button/Button';
-import {IArticle, IUser} from '../../core/application';
+import {IArticle} from '../../types';
 import {Avatar} from '../Avatar/Avatar';
 import {getShortName} from "../../utils/utils";
+import {Link} from 'react-router-dom';
 
 type TProps = {
     article: IArticle | null
@@ -33,7 +34,9 @@ export const ArticleCard: React.FC<TProps> = ({article}): React.ReactElement | n
                 </h2>
             </div>
             <div className={styles.buttonGroup}>
-                <Button type={'button'} isLoading={!article}>More</Button>
+                <Link to={!!article ? `${article.id}` : ''}>
+                    <Button type={'button'} isLoading={!article}>More</Button>
+                </Link>
             </div>
         </div>
     );
