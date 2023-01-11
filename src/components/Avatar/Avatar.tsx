@@ -1,5 +1,5 @@
 import React from 'react';
-import {AVATAR_SIZE} from '../../enums';
+import {AVATAR_SIZE} from '../../types/enums';
 import styles from './Avatar.module.scss';
 import classNames from 'classnames';
 

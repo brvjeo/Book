@@ -1,38 +1,23 @@
-import React, {useEffect} from 'react';
-import {NotFoundPage} from './pages/Not found/NotFoundPage';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {LoginPage} from './pages/Login/LoginPage';
-import {ArticlesPage} from './pages/Articles/ArticlesPage';
-import {useAppDispatch} from './store/hooks/useAppDispatch';
-import {authenticateUserOnReloadThunk} from "./store/user/thunks/authenticateUserOnReloadThunk";
-import {initializeApplication} from "./core/application";
-import {EditorPage} from './pages/Editor/EditorPage';
-import {ReaderPage} from './pages/Reader/ReaderPage';
+import React from 'react';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {LoginPage} from './pages/LoginPage/LoginPage';
+import {ApplicationProvider} from './services/application/context/ApplicationProvider';
+import {NotFoundPage} from './pages/Not foundPage/NotFoundPage';
 
-export const application = initializeApplication();
-export const ApplicationContext = React.createContext(application);
+const router = createBrowserRouter(
+    [
+        {
+            path: '/',
+            element: <LoginPage/>,
+            errorElement: <NotFoundPage/>
+        }
+    ]
+);
 
-export const App = () => {
-    const dispatch = useAppDispatch();
-
-    useEffect(
-        () => {
-            dispatch(authenticateUserOnReloadThunk(application));
-        },
-        []
-    );
-
+export const App: React.FC = (): React.ReactElement | null => {
     return (
-        <ApplicationContext.Provider value={application}>
-            <BrowserRouter>
-                <Routes>
-                    <Route path={'/'} element={<LoginPage/>}/>
-                    <Route path={'*'} element={<NotFoundPage/>}/>
-                    <Route path={'/:userID/articles'} element={<ArticlesPage/>}/>
-                    <Route path={'/:userID/editor'} element={<EditorPage/>}/>
-                    <Route path={`/:userID/articles/:articleID`} element={<ReaderPage/>}/>
-                </Routes>
-            </BrowserRouter>
-        </ApplicationContext.Provider>
+        <ApplicationProvider>
+            <RouterProvider router={router}/>
+        </ApplicationProvider>
     );
 }

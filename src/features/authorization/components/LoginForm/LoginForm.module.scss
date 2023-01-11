@@ -1,0 +1,8 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables';
+
+.form {
+  @include mixins.flexible(flex-start, center, column);
+  row-gap: 0.8em;
+}
+

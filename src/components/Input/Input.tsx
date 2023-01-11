@@ -1,7 +1,7 @@
 import styles from './Input.module.scss';
 import classNames from 'classnames';
 import React from 'react';
-import {INPUT_SIZE} from '../../enums';
+import {INPUT_SIZE} from '../../types/enums';
 
 type TProps = {
     type: 'email' | 'text' | 'password',

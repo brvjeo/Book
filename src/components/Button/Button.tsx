@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, {BaseSyntheticEvent} from 'react';
 import styles from './Button.module.scss';
-import {BUTTON_SIZE} from '../../enums';
+import {BUTTON_SIZE} from '../../types/enums';
 
 type TProps = {
     type?: 'submit' | 'button',

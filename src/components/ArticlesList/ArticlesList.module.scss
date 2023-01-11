@@ -1,8 +1,0 @@
-@use '../../styles/mixins';
-@use '../../styles/variables';
-
-.list{
-  padding: variables.$global-list-row-gap 0;
-  @include mixins.flexible(flex-start, stretch, column);
-  row-gap: variables.$global-list-row-gap;
-}

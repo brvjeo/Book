@@ -1,0 +1,35 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables';
+
+$--margin-bottom: 8px;
+$--width: 390px;
+
+.form{
+  width: $--width;
+  padding: calc($--margin-bottom * 3);
+}
+
+.logo{
+  display: flex;
+  justify-content: center;
+  margin-bottom: calc($--margin-bottom * 3);
+}
+
+.title{
+  text-align: center;
+  font-size: calc(var(--font-size) * 1.7);
+  margin-bottom: calc($--margin-bottom * 4);
+}
+
+.input:not(:last-of-type){
+  margin-bottom: $--margin-bottom;
+}
+
+.button{
+  margin: calc($--margin-bottom * 3.5) auto calc($--margin-bottom * 1.5) auto;
+}
+
+.error{
+  color: #FF0000;
+  margin: $--margin-bottom 0;
+}
